@@ -15,7 +15,7 @@ public class CountUniqueWords {
             String nextLine = reader.readLine();
 
             while (nextLine != null){
-                String[] inputWords = nextLine.split("\\s+|\\."); // TODO find the right regex
+                String[] inputWords = nextLine.split("[\s.]+");
                 uniqueSetOfWords.addAll(Arrays.asList(inputWords));
                 nextLine = reader.readLine();
             }
