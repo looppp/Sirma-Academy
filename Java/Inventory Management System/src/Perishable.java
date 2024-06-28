@@ -1,4 +1,4 @@
 public interface Perishable {
     boolean isPerishable();
-    void 
+    void handleExpiration();
 }

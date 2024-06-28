@@ -1,5 +1,5 @@
 public interface Item {
-    void details();
+    String details();
     void description();
-    void calculateValue();
+    double calculateValue();
 }
