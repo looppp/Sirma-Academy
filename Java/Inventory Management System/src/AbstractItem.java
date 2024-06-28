@@ -13,6 +13,10 @@ public class AbstractItem implements Breakable, Categorizable, Item, Sellable, P
         this.perishable = perishable;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     @Override
     public boolean isBreakable() {
         return this.breakable;
@@ -20,14 +24,14 @@ public class AbstractItem implements Breakable, Categorizable, Item, Sellable, P
 
     @Override
     public void handleBreakage() {
-        if(this.perishable){
-            System.out.println("This item is breakable handle it with care!");
+        if(this.breakable){
+            System.out.println(this.name + " is breakable handle it with care!");
         }
     }
 
     @Override
     public void setCategory(String category) {
-
+         this.category = category;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class AbstractItem implements Breakable, Categorizable, Item, Sellable, P
     @Override
     public void handleExpiration() {
         if(this.perishable){
-            System.out.println("Check the expiration date! This item is perishable");
+            System.out.println(this.name + " is perishable. Check the expiration date!");
         }
     }
 

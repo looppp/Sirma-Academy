@@ -1,7 +1,7 @@
 public class FragileItem extends InventoryItem{
     private double weight;
-    public FragileItem(String name, double price, String category, boolean breakable, boolean perishable, String itemID, int quantity, double weight) {
-        super(name, price, category, breakable, perishable, itemID, quantity);
+    public FragileItem(String name, double price, String category, String itemID, int quantity, double weight) {
+        super(name, price, category, true, false, itemID, quantity);
         this.weight = weight;
     }
 
@@ -15,12 +15,12 @@ public class FragileItem extends InventoryItem{
 
     @Override
     public double calculateValue(){
-        return getItemPrice() * getQuantity();
+        return getItemPrice() * getQuantity() * this.weight;
     }
 
     @Override
     public void description(){
         super.description();
-        System.out.println("This item is fragile, breakable and weighs " + weight + " kg.");
+        System.out.println(getName() +  " is fragile, breakable and weighs " + weight + " kg.");
     }
 }

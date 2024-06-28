@@ -1,6 +1,6 @@
 public class GroceryItem extends InventoryItem{
-    public GroceryItem(String name, double price, String category, boolean breakable, boolean perishable, String itemID, int quantity) {
-        super(name, price, category, breakable, perishable, itemID, quantity);
+    public GroceryItem(String name, double price, String category, String itemID, int quantity) {
+        super(name, price, category, false, true, itemID, quantity);
     }
 
     @Override
@@ -11,6 +11,6 @@ public class GroceryItem extends InventoryItem{
     @Override
     public void description() {
         super.description();
-        System.out.println("This item is perishable and belongs to the Grocery category.");
+        System.out.println(getName() +  " is perishable and belongs to the Grocery category.");
     }
 }
