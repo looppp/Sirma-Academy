@@ -16,6 +16,7 @@ public class Main {
             listOfItems.add(reader.readLine());
         }
         String itemToCompare = reader.readLine();
+        System.out.println(compareItemToListOfItems(listOfItems, itemToCompare));
 
     }
     public static <T extends Comparable<T>> int compareItemToListOfItems(List<T> list, T item){
