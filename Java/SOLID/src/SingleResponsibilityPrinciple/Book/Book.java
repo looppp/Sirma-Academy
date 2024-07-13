@@ -1,4 +1,4 @@
-package SingleResponsibilityPrinciple;
+package SingleResponsibilityPrinciple.Book;
 
 public class Book {
     private final String title;
