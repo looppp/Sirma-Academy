@@ -15,15 +15,25 @@ public class Employee {
     private double salary;
     private boolean isActive;
 
+    public Employee (String ID, String name, String department, String role, double salary){
+        this.ID = ID;
+        this.name = name;
+        this.startDate = LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        this.department = department;
+        this.role = role;
+        this.salary = salary;
+        this.isActive = true;
+    }
+
     public Employee (String ID, String name, String startDate, String endDate, String department, String role, double salary){
         this.ID = ID;
         this.name = name;
         this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.endDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.endDate = endDate.equals("null") ? null : LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.department = department;
         this.role = role;
         this.salary = salary;
-        this.isActive = endDate == null;
+        this.isActive = this.endDate == null;
     }
 
     public String getDepartment() {
