@@ -1,22 +1,29 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import static java.lang.StringTemplate.STR;
 
 public class Employee {
     private String ID;
     private String name;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String department;
     private String role;
     private double salary;
     private boolean isActive;
 
-    public Employee (String ID, String name, String department, String role, double salary){
+    public Employee (String ID, String name, String startDate, String endDate, String department, String role, double salary){
         this.ID = ID;
         this.name = name;
+        this.startDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.endDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.department = department;
         this.role = role;
         this.salary = salary;
-        this.isActive = true;
+        this.isActive = endDate == null;
     }
 
     public String getDepartment() {
@@ -33,6 +40,22 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public String getID() {
@@ -69,6 +92,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return STR."ID: \{ID}, Name: \{name}, Department: \{department}, Role: \{role}, Salary: \{salary}";
+        return STR."ID: \{ID}, Name: \{name}, StartDate: \{startDate}, \{endDate}, Department: \{department}, Role: \{role}, Salary: \{salary}";
     }
 }

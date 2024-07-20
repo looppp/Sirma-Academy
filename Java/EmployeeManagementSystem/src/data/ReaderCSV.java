@@ -12,17 +12,21 @@ public class ReaderCSV {
     public List<Employee> readEmployees(String filePath){
         List<Employee> employees = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+            //Skipping the first line
+            reader.readLine();
             String input = reader.readLine();
             while(input != null){
                 String[] inputData = input.split(",");
-                if(inputData.length == 5){
+                if(inputData.length == 7){
                     String ID = inputData[0];
                     String name = inputData[1];
-                    String department = inputData[2];
-                    String role = inputData[3];
-                    double salary = Double.parseDouble(inputData[4]);
+                    String startDate = inputData[2];
+                    String endDate = inputData[3];
+                    String department = inputData[4];
+                    String role = inputData[5];
+                    double salary = Double.parseDouble(inputData[6]);
 
-                    Employee employee = new Employee(ID, name, department, role, salary);
+                    Employee employee = new Employee(ID, name, startDate, endDate, department, role, salary);
                     employees.add(employee);
                 }
                 input = reader.readLine();
