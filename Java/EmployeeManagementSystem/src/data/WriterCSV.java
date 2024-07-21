@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.Locale;
 
 // Writes the employee data to the CSV file.
-// filePath the path to the CSV file containing employee data.
-// List of Employee contains objects that are read from the file.
-// throws IOException if an I/O error occurs while reading the file.
+// filePath the path to the CSV file where the employee data will be written.
+// List of Employee the objects that are going to be written to the file.
+// throws IOException if an I/O error occurs while writing to the file.
 public class WriterCSV {
     public void writeEmployee(String filePath, List<Employee> employees){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
             writer.write("Id,Name,StartDate,EndDate,Department,Role,Salary");
             writer.newLine();
 
+            // Writing each employee's data
             for(Employee employee : employees){
                 String formatedEmployee = String.format(Locale.US,"%s,%s,%s,%s,%s,%s,%.2f",
                         employee.getID(),
@@ -31,7 +32,8 @@ public class WriterCSV {
                 writer.newLine();
             }
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            // Printing the error message.
+            System.out.println(STR."An error has occurred while trying to write to the file: \{e.getMessage()}");
         }
     }
 }

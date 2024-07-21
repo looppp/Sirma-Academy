@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 import static java.lang.StringTemplate.STR;
 
+
+// Represents an employee with details such as ID, name, department, role, salary, and employment dates.
+
 public class Employee {
     private String ID;
     private String name;
@@ -15,6 +18,7 @@ public class Employee {
     private double salary;
     private boolean isActive;
 
+    // Constructor that is used when creating a new Employee.
     public Employee (String ID, String name, String department, String role, double salary){
         this.ID = ID;
         this.name = name;
@@ -24,7 +28,7 @@ public class Employee {
         this.salary = salary;
         this.isActive = true;
     }
-
+    // Constructor that is used when loading the Employees from the CSV file.
     public Employee (String ID, String name, String startDate, String endDate, String department, String role, double salary){
         this.ID = ID;
         this.name = name;
@@ -36,6 +40,8 @@ public class Employee {
         this.isActive = this.endDate == null;
     }
 
+
+    // Getter and setter methods:
     public String getDepartment() {
         return department;
     }

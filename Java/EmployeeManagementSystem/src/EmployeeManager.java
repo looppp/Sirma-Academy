@@ -3,6 +3,8 @@ import service.EmployeeService;
 
 import java.util.List;
 
+//Manages employee operations including adding, editing, listing, firing, searching, and saving employees.
+
 public class EmployeeManager {
     private EmployeeService service;
 
@@ -10,19 +12,24 @@ public class EmployeeManager {
         this.service = service;
     }
 
+    //Executes the given command depending on the input.
     public void execute(String command){
         String[] commandAndInput = command.trim().split(",\\s+");
         String[] commandLine = commandAndInput[0].split("\\s+");
         switch (commandLine[0].toLowerCase()){
             case "add":
-                if(service.searchByID(commandAndInput[1]) != null){
+                if(commandAndInput.length != 6){
+                    System.out.println("Invalid input for adding an employee.");
+                    break;
+                }
+                else if( service.searchByID(commandAndInput[1]) != null){
                     System.out.println("Employee with this ID already exists.");
                     break;
                 }
-                else if(commandAndInput.length != 6){
-                    System.out.println("Invalid input for Adding an employee.");
-                    break;
-                } else {
+                else if(commandAndInput[2].split("\\s+").length != 2){
+                    System.out.println("Incorrect name format");
+                }
+                else {
                     Employee employee = new Employee(
                             commandAndInput[1],
                             commandAndInput[2],
@@ -91,7 +98,7 @@ public class EmployeeManager {
                             System.out.println("Employee not found.");
                         }
                     } else if(commandLine[1].equalsIgnoreCase("department")){
-                        List<Employee> employeesInDepartment = service.searchByDepartment(commandLine[2]);
+                        List<Employee> employeesInDepartment = service.searchByDepartment(commandLine[2].toLowerCase());
                         if(!employeesInDepartment.isEmpty()){
                             employeesInDepartment.forEach(System.out::println);
                         } else {

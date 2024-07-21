@@ -72,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<Employee> searchByDepartment(String department) {
         return employees.stream()
-                .filter(employee -> employee.getDepartment().equals(department) && employee.isActive())
+                .filter(employee -> employee.getDepartment().toLowerCase().equals(department) && employee.isActive())
                 .toList();
     }
 }
