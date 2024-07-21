@@ -1,7 +1,6 @@
 import model.Employee;
 import service.EmployeeService;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class EmployeeManager {
