@@ -12,7 +12,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     private List<Employee> employees;
 
     public EmployeeServiceImpl(){
-        this.employees = new ArrayList<>();
+        employees = new ArrayList<>();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<Employee> searchByName(String name) {
         return employees.stream()
-                .filter(employee -> employee.getName().equals(name) && employee.isActive())
+                .filter(employee -> employee.getName().toLowerCase().startsWith(name.toLowerCase()) && employee.isActive())
                 .toList();
     }
 

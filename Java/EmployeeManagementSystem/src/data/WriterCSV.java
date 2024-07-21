@@ -6,7 +6,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
+// Writes the employee data to the CSV file.
+// filePath the path to the CSV file containing employee data.
+// List of Employee contains objects that are read from the file.
+// throws IOException if an I/O error occurs while reading the file.
 public class WriterCSV {
     public void writeEmployee(String filePath, List<Employee> employees){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
@@ -14,7 +19,7 @@ public class WriterCSV {
             writer.newLine();
 
             for(Employee employee : employees){
-                String formatedEmployee = String.format("%s,%s,%s,%s,%s,%s,%.2f",
+                String formatedEmployee = String.format(Locale.US,"%s,%s,%s,%s,%s,%s,%.2f",
                         employee.getID(),
                         employee.getName(),
                         employee.getStartDate(),

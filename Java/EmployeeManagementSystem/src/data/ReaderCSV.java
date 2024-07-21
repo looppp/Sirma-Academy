@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Reads the employee data from the CSV file.
 public class ReaderCSV {
     public List<Employee> readEmployees(String filePath){
         List<Employee> employees = new ArrayList<>();
@@ -32,7 +33,7 @@ public class ReaderCSV {
                 input = reader.readLine();
             }
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            System.out.println(STR."An error has occurred while trying to read the file: \{e.getMessage()}");
         }
         return employees;
     }

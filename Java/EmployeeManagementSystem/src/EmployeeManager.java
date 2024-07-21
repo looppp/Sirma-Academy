@@ -11,66 +11,94 @@ public class EmployeeManager {
     }
 
     public void execute(String command){
-        String[] commandToken = command.trim().split(",\\s*|\\s+");
-        switch (commandToken[0].toLowerCase()){
+        String[] commandAndInput = command.trim().split(",\\s+");
+        String[] commandLine = commandAndInput[0].split("\\s+");
+        switch (commandLine[0].toLowerCase()){
             case "add":
-                if(commandToken.length == 7){
-                    Employee employee = new Employee(
-                            commandToken[2],
-                            commandToken[3],
-                            commandToken[4],
-                            commandToken[5],
-                            Double.parseDouble(commandToken[6]));
-                    service.addEmployee(employee);
-                    System.out.println(STR."Employee: \{commandToken[3]} is added successfully.");
-                } else {
+                if(service.searchByID(commandAndInput[1]) != null){
+                    System.out.println("Employee with this ID already exists.");
+                    break;
+                }
+                else if(commandAndInput.length != 6){
                     System.out.println("Invalid input for Adding an employee.");
-                }
-                break;
-            case "edit":
-                if(commandToken.length == 6){
-                    Employee editedEmployee = new Employee(
-                            commandToken[1],
-                            commandToken[2],
-                            commandToken[3],
-                            commandToken[4],
-                            Double.parseDouble(commandToken[5]));
-
-                    service.editEmployee(commandToken[1], editedEmployee);
-                    System.out.println(STR."Employee: \{commandToken[2]} is edited successfully.");
+                    break;
                 } else {
-                    System.out.println("Invalid input for editing an employee.");
+                    Employee employee = new Employee(
+                            commandAndInput[1],
+                            commandAndInput[2],
+                            commandAndInput[3],
+                            commandAndInput[4],
+                            Double.parseDouble(commandAndInput[5]));
+                    service.addEmployee(employee);
+                    System.out.println(STR."Employee: \{commandAndInput[2]} is added successfully.");
                 }
                 break;
+
+            case "edit":
+                if(commandAndInput.length != 5){
+                    System.out.println("Invalid input for editing an employee.");
+                    break;
+                }
+                else if(service.searchByID(commandLine[1]) == null) {
+                    System.out.println("The employee you are attempting to modify doesn't exist.");
+                    break;
+                }
+                else {
+                    Employee editedEmployee = new Employee(
+                            commandLine[1],
+                            commandAndInput[1],
+                            commandAndInput[2],
+                            commandAndInput[3],
+                            Double.parseDouble(commandAndInput[4]));
+
+                    service.editEmployee(commandLine[1], editedEmployee);
+                    System.out.println(STR."Employee: \{commandAndInput[1]} is edited successfully.");
+
+                }
+                break;
+
             case "list":
-                service.listAllEmployees().forEach(System.out::println);
+                if(!command.equalsIgnoreCase("list employees")){
+                    System.out.println("Incorrect input for listing the employees.");
+                } else if(service.listAllEmployees().isEmpty()){
+                    System.out.println("The are currently no active employees.");
+                } else {
+                    service.listAllEmployees().forEach(System.out::println);
+                }
                 break;
             case "fire":
-                if(commandToken.length == 2){
-                    service.fireEmployee(commandToken[1]);
-                    System.out.println("Employee is successfully fired.");
-                } else {
+                if(commandLine.length != 2){
                     System.out.println("Invalid input for firing the employee.");
+                    break;
+                } else if(service.searchByID(commandLine[1]) == null){
+                    System.out.println("The employee you are attempting to fire doesn't exist.");
+                    break;
+                } else if(!service.searchByID(commandLine[1]).isActive()){
+                    System.out.println("The employee is already fired.");
+                } else {
+                    service.fireEmployee(commandLine[1]);
+                    System.out.println("Employee is successfully fired.");
                 }
                 break;
+
             case "search":
-                if(commandToken.length == 3){
-                    if(commandToken[1].equalsIgnoreCase("id")){
-                        Employee employee = service.searchByID(commandToken[2]);
+                if(commandLine.length == 3){
+                    if(commandLine[1].equalsIgnoreCase("id")){
+                        Employee employee = service.searchByID(commandLine[2]);
                         if(employee != null){
                             System.out.println(employee);
                         } else {
                             System.out.println("Employee not found.");
                         }
-                    } else if(commandToken[1].equalsIgnoreCase("Department")){
-                        List<Employee> employeesInDepartment = service.searchByDepartment(commandToken[2]);
-                        if(employeesInDepartment != null){
+                    } else if(commandLine[1].equalsIgnoreCase("department")){
+                        List<Employee> employeesInDepartment = service.searchByDepartment(commandLine[2]);
+                        if(!employeesInDepartment.isEmpty()){
                             employeesInDepartment.forEach(System.out::println);
                         } else {
                             System.out.println("No employees found in this department.");
                         }
-                    } else if(commandToken[1].equalsIgnoreCase("name")){
-                        List<Employee> employeesWithName = service.searchByName(commandToken[2]);
+                    } else if(commandLine[1].equalsIgnoreCase("name")){
+                        List<Employee> employeesWithName = service.searchByName(commandLine[2]);
                         if(employeesWithName != null){
                             employeesWithName.forEach(System.out::println);
                         } else {
@@ -81,8 +109,9 @@ public class EmployeeManager {
                     System.out.println("Invalid input for searching employees.");
                 }
                 break;
+
             case "save":
-                if(commandToken[1].equalsIgnoreCase("&") && commandToken[2].equalsIgnoreCase("exit")){
+                if(commandLine[1].equalsIgnoreCase("&") && commandLine[2].equalsIgnoreCase("exit")){
                     System.out.println("Saving the data and exiting the application.");
                     break;
                 } else {
