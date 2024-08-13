@@ -17,15 +17,15 @@ public class LibraryService {
         return  csvService.readBooks();
     }
 
-//    public List<Magazine> getMagazines(){
-//        return  csvService.readMagazines();
-//    }
+    public List<Magazine> getMagazines(){
+        return  csvService.readMagazines();
+    }
 
     public void addBook(Book book){
         csvService.saveBook(book);
     }
 
-//    public boolean addMagazine(Magazine magazine){
-//        csvService.saveMagazine(magazine);
-//    }
+    public void addMagazine(Magazine magazine){
+        csvService.saveMagazine(magazine);
+    }
 }

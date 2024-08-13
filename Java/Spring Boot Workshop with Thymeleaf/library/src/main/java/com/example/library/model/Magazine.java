@@ -6,11 +6,15 @@ public class Magazine {
     private int year;
     private String issn;
 
-    public Magazine(String publisher, String issn, int year, String title) {
+    public Magazine(String title, String publisher, int year, String issn) {
         this.publisher = publisher;
         this.issn = issn;
         this.year = year;
         this.title = title;
+    }
+
+    public Magazine() {
+
     }
 
     public String getPublisher() {
