@@ -1,9 +1,19 @@
 package com.academi.sirma.restdbapp.models;
 
+import jakarta.validation.constraints.*;
+
 public class Article {
     private int id;
+
+    @NotEmpty(message = "Title cannot be empty.")
+    @Size(min = 5, max = 100, message = "Title must be between 5 and 100 characters.")
     private String title;
+
+    @NotEmpty(message = "Content cannot be empty.")
+    @Size(min = 20, message = "Content must be at least 20 characters long.")
     private String content;
+
+
     private long userId;
 
     public Article(int id, String title, String content, long userId) {
