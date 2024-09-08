@@ -12,7 +12,6 @@ import java.util.Set;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -23,8 +22,6 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private Set<Player> players;
-
-
 
 
 }

@@ -12,7 +12,6 @@ import java.util.Set;
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String date;
@@ -26,5 +25,5 @@ public class Match {
     private Team bTeam;
 
     @OneToMany(mappedBy = "match")
-    private Set<Record> records;
+    private Set<MatchRecord> matchRecords;
 }
