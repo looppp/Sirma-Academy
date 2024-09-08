@@ -18,6 +18,7 @@ public class TeamDataLoader {
         List<String[]> csvData = CsvReader.readCSV(filePath);
 
         for (String[] row : csvData){
+            if(row.length != 4) continue;
             try {
                 Long id = Long.parseLong(row[0]);
                 String name = row[1];

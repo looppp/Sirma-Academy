@@ -18,6 +18,7 @@ public class Team {
 
     private String managerFullName;
 
+    @Column(name = "team_group")
     private String group;
 
     @OneToMany(mappedBy = "team")

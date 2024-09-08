@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -144,7 +144,7 @@
           </object-type-filter>
         </object-filters>
       </connection>
-      <connection id="9926004f-6037-4342-b874-89c767a5ec82" active="true" signed="true">
+      <connection id="9926004f-6037-4342-b874-89c767a5ec82" active="false" signed="true">
         <database>
           <name value="Connection 1" />
           <description value="" />
@@ -238,7 +238,7 @@
           </object-type-filter>
         </object-filters>
       </connection>
-      <connection id="23f82247-a9e2-453b-a6c1-7ea856e5885c" active="true" signed="true">
+      <connection id="23f82247-a9e2-453b-a6c1-7ea856e5885c" active="false" signed="true">
         <database>
           <name value="Connection 2" />
           <description value="" />
@@ -332,7 +332,7 @@
           </object-type-filter>
         </object-filters>
       </connection>
-      <connection id="1d837c8c-56db-44b1-b4f5-c0f13cd4c31b" active="true" signed="true">
+      <connection id="1d837c8c-56db-44b1-b4f5-c0f13cd4c31b" active="false" signed="true">
         <database>
           <name value="Connection 3" />
           <description value="" />
