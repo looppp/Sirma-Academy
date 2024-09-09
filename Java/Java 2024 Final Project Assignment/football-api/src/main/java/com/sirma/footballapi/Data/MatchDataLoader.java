@@ -18,7 +18,7 @@ public class MatchDataLoader {
 
     private static final String[] DATE_FORMATTERS = {
             "yyyy-MM-dd", "yyyy/MM/dd", "yyyyMMdd",
-            "dd-MM-yyyy", "dd/MM/yyyy", "MMddyyyy",
+            "dd-MM-yyyy", "dd/MM/yyyy", "MMddyyyy", "M/d/yyyy",
             "MMM d, yyyy", "MMMM d, yyyy", "yyyy MMM d", "yyyy/MM/dd HH:mm:ss"
     };
 

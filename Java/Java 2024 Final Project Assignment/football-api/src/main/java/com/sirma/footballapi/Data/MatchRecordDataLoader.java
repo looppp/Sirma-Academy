@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MatchRecordDataLoader {
@@ -37,15 +38,16 @@ public class MatchRecordDataLoader {
                 Long playerId = Long.parseLong(row[1]);
                 Long matchId = Long.parseLong(row[2]);
                 Integer fromMinutes = Integer.parseInt(row[3]);
-                Integer toMinutes = Integer.parseInt(row[4]);
+                Integer toMinutes = !Objects.equals(row[4].toLowerCase(), "NULL".toLowerCase()) ? Integer.parseInt(row[4]) : 90;
 
                 Player player = playerService.getPlayerById(playerId).orElse(null);
                 Match match = matchService.getMatchById(matchId).orElse(null);
 
-                if (matchRecordService.getRecordById(id).isPresent()) {
-                    System.out.println(STR."MatchRecord already exists with ID: \{id}");
-                    continue;
-                }
+//                if (matchRecordService.getRecordById(id).isPresent()) {
+//                    System.out.println(STR."MatchRecord already exists with ID: \{id}");
+//                    continue;
+//                }
+                //TODO find a solution for logging everytime on app start!
 
                 if(player == null || match == null){
                     System.out.println(STR."Invalid player or match in row with ID: \{id}");
