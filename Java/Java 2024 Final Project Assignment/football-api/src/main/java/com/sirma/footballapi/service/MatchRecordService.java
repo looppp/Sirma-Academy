@@ -23,8 +23,8 @@ public class MatchRecordService {
         return matchRecordRepository.findById(id);
     }
 
-    public MatchRecord createRecord(MatchRecord matchRecord){
-        return matchRecordRepository.save(matchRecord);
+    public void createRecord(MatchRecord matchRecord){
+        matchRecordRepository.save(matchRecord);
     }
 
     public void deleteRecord(Long id){
