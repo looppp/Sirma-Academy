@@ -9,10 +9,15 @@ public class LoadingDataConfiguration {
 
 
     @Bean
-    public CommandLineRunner dataLoader(PlayerDataLoader playerDataLoader, TeamDataLoader teamDataLoader){
+    public CommandLineRunner dataLoader(PlayerDataLoader playerDataLoader,
+                                        TeamDataLoader teamDataLoader,
+                                        MatchDataLoader matchDataLoader,
+                                        MatchRecordDataLoader matchRecordDataLoader){
         return args -> {
             teamDataLoader.loadTeams("csv/teams.csv");
             playerDataLoader.loadPlayers("csv/players.csv");
+            matchDataLoader.loadMatches("csv/matches.csv");
+            matchRecordDataLoader.loadRecords("csv/records.csv");
         };
     }
 }

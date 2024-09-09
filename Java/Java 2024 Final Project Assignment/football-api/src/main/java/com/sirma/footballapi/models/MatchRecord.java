@@ -18,7 +18,7 @@ public class MatchRecord {
     @ManyToOne
     private Match match;
 
-    private String fromMinutes;
+    private Integer fromMinutes;
 
-    private String toMinutes;
+    private Integer toMinutes;
 }
