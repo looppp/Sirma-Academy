@@ -22,7 +22,10 @@ public class PlayerDataLoader {
         List<String[]> csvData = CsvReader.readCSV(filePath);
 
         for (String[] row: csvData){
-            if(row.length != 5) continue;
+            if(row.length != 5) {
+                System.out.println(STR."Invalid data format:\{String.join(",", row)}");
+                continue;
+            }
 
             try {
                 Long id = Long.parseLong(row[0]);

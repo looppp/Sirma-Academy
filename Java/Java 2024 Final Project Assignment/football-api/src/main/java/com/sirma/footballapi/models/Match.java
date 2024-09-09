@@ -3,6 +3,7 @@ package com.sirma.footballapi.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class Match {
     @Id
     private Long id;
 
-    private String date;
+    private LocalDate date;
 
     private String score;
 
