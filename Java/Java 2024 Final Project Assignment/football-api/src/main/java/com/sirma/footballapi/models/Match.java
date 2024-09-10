@@ -15,7 +15,6 @@ import java.util.Set;
 public class Match {
 
     @Id
-    @NotNull(message = "ID cannot be null")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,4 +32,12 @@ public class Match {
 
     @OneToMany(mappedBy = "match")
     private Set<MatchRecord> matchRecords;
+
+    public Match(LocalDate date, String score, Team aTeam, Team bTeam, Set<MatchRecord> matchRecords) {
+        this.date = date;
+        this.score = score;
+        this.aTeam = aTeam;
+        this.bTeam = bTeam;
+        this.matchRecords = matchRecords;
+    }
 }

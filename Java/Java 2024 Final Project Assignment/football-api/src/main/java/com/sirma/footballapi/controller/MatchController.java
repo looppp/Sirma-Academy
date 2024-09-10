@@ -3,6 +3,7 @@ package com.sirma.footballapi.controller;
 import com.sirma.footballapi.models.Match;
 import com.sirma.footballapi.service.MatchService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/matches")
 @Validated
+@Slf4j
 public class MatchController {
 
     @Autowired

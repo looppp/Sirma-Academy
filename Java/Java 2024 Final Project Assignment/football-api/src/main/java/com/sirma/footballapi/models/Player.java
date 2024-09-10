@@ -11,7 +11,6 @@ import lombok.*;
 public class Player {
 
     @Id
-    @NotNull(message = "ID cannot be null")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -15,7 +15,6 @@ import java.util.Set;
 public class Team {
 
     @Id
-    @NotNull(message = "ID cannot be null")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

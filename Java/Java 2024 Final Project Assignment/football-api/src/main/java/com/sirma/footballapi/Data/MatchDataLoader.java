@@ -1,6 +1,5 @@
 package com.sirma.footballapi.Data;
 
-
 import com.sirma.footballapi.models.Match;
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.service.MatchService;
@@ -8,19 +7,14 @@ import com.sirma.footballapi.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static com.sirma.footballapi.utils.DateParser.parseDate;
 
 @Service
 public class MatchDataLoader {
 
-    private static final String[] DATE_FORMATTERS = {
-            "yyyy-MM-dd", "yyyy/MM/dd", "yyyyMMdd",
-            "dd-MM-yyyy", "dd/MM/yyyy", "MMddyyyy", "M/d/yyyy",
-            "MMM d, yyyy", "MMMM d, yyyy", "yyyy MMM d", "yyyy/MM/dd HH:mm:ss"
-    };
 
     @Autowired
     private MatchService matchService;
@@ -60,17 +54,5 @@ public class MatchDataLoader {
 
             }
         }
-    }
-
-    private static LocalDate parseDate(String date){
-        for(String format : DATE_FORMATTERS){
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-                return  LocalDate.parse(date, formatter);
-            } catch (DateTimeException e){
-                continue;
-            }
-        }
-        throw new DateTimeException(STR."Failed to parse the date: \{date}");
     }
 }
