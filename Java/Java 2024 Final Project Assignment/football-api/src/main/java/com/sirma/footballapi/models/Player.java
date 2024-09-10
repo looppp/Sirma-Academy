@@ -12,10 +12,12 @@ public class Player {
 
     @Id
     @NotNull(message = "ID cannot be null")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Team number cannot be null")
-    @Size(min = 1, max = 99, message = "Team number must be between 1 and 99")
+    @Min(value = 1, message = "Team number must be greater than 0")
+    @Max(value = 99, message = "Team number must be less than 100")
     private Integer teamNumber;
 
     @NotBlank(message = "Team position cannot be null")

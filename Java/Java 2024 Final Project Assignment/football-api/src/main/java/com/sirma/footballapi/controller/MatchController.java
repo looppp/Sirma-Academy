@@ -46,7 +46,7 @@ public class MatchController {
             return ResponseEntity.badRequest().body(null);
         }
         match.setId(id);
-        return ResponseEntity.ok(matchService.createMatch(match));
+        return ResponseEntity.ok(matchService.updateMatch(id, match));
     }
 
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package com.sirma.footballapi.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -14,6 +15,8 @@ import java.util.Set;
 public class Team {
 
     @Id
+    @NotNull(message = "ID cannot be null")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Team name cannot be empty")
