@@ -3,7 +3,6 @@ package com.sirma.footballapi.service;
 import com.sirma.footballapi.dto.PlayerDTO;
 import com.sirma.footballapi.models.MatchRecord;
 import com.sirma.footballapi.repository.MatchRecordRepository;
-import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,9 @@ public class PairService {
     @Autowired
     private MatchRecordRepository matchRecordRepository;
 
-    public List<PlayerDTO> findLongestPlayingPair(){
+    public PlayerDTO findLongestPlayingPair(){
         List<MatchRecord> matchRecords = matchRecordRepository.findAll();
+
         Map<String, Long> playerPairPlayedTime = new HashMap<>();
 
         Map<Long, List<MatchRecord>> recordsOrderedByMatch = matchRecords.
@@ -41,10 +41,12 @@ public class PairService {
             }
         }
 
-        return playerPairPlayedTime.entrySet().stream().map(entry -> {
-            String[] playerIds = entry.getKey().split("-");
-            return new PlayerDTO(Long.parseLong(playerIds[0]), Long.parseLong(playerIds[1]), entry.getValue());
-        }).collect(Collectors.toList());
+        return playerPairPlayedTime.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(entry -> {
+                     String[] playerIds = entry.getKey().split("-");
+                     return new PlayerDTO(Long.parseLong(playerIds[0]), Long.parseLong(playerIds[1]), entry.getValue());
+        }).orElse(null);
     }
 
     private int calculateOverlap(MatchRecord firstRecord, MatchRecord secondRecord) {
@@ -54,7 +56,7 @@ public class PairService {
         int secondEnd = secondRecord.getToMinutes();
 
         int overlapStart = Math.max(firstStart, secondStart);
-        int overlapEnd = Math.max(firstEnd, secondEnd);
+        int overlapEnd = Math.min(firstEnd, secondEnd);
 
         if(overlapEnd > overlapStart){
             return overlapEnd - overlapStart;
