@@ -43,11 +43,7 @@ public class MatchRecordDataLoader {
                 Player player = playerService.getPlayerById(playerId).orElse(null);
                 Match match = matchService.getMatchById(matchId).orElse(null);
 
-//                if (matchRecordService.getRecordById(id).isPresent()) {
-//                    System.out.println(STR."MatchRecord already exists with ID: \{id}");
-//                    continue;
-//                }
-                //TODO find a solution for logging everytime on app start!
+                if (matchRecordService.getRecordById(id).isPresent()) continue;
 
                 if(player == null || match == null){
                     System.out.println(STR."Invalid player or match in row with ID: \{id}");

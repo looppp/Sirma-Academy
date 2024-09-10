@@ -1,6 +1,5 @@
 package com.sirma.footballapi.Data;
 
-import com.sirma.footballapi.models.Player;
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;

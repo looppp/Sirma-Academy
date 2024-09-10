@@ -41,8 +41,12 @@ public class PlayerController {
         if(playerService.getPlayerById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }
+        if (!id.equals(player.getId())){
+            System.out.println(STR."The URL ID: \{id} doesn't match the request body ID: \{player.getId()}");
+            return ResponseEntity.badRequest().body(null);
+        }
         player.setId(id);
-        return ResponseEntity.ok(playerService.createPlayer(player));
+        return ResponseEntity.ok(playerService.updatePlayer(id, player));
     }
 
     @DeleteMapping("/{id}")

@@ -33,8 +33,12 @@ public class TeamController {
         if (teamService.getTeamById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        if (!id.equals(team.getId())){
+            System.out.println(STR."The URL ID: \{id} doesn't match the request body ID: \{team.getId()}");
+            return ResponseEntity.badRequest().body(null);
+        }
         team.setId(id);
-        return ResponseEntity.ok(teamService.createTeam(team));
+        return ResponseEntity.ok(teamService.updateTeam(id, team));
     }
 
     @DeleteMapping("/{id}")

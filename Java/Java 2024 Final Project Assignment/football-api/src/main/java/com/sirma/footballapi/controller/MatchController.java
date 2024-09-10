@@ -41,6 +41,10 @@ public class MatchController {
         if (matchService.getMatchById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        if (!id.equals(match.getId())){
+            System.out.println(STR."The URL ID: \{id} doesn't match the request body ID: \{match.getId()}");
+            return ResponseEntity.badRequest().body(null);
+        }
         match.setId(id);
         return ResponseEntity.ok(matchService.createMatch(match));
     }
