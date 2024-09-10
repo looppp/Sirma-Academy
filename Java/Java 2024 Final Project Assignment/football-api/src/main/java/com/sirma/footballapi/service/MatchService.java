@@ -23,8 +23,8 @@ public class MatchService {
         return matchRepository.findById(id);
     }
 
-    public void createMatch(Match match){
-        matchRepository.save(match);
+    public Match createMatch(Match match){
+       return matchRepository.save(match);
     }
 
     public void deleteMatch(Long id){
