@@ -2,8 +2,10 @@ package com.sirma.footballapi.controller;
 
 import com.sirma.footballapi.models.Player;
 import com.sirma.footballapi.service.PlayerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/players")
+@Validated
 public class PlayerController {
 
     @Autowired
@@ -29,12 +32,12 @@ public class PlayerController {
     }
 
     @PostMapping
-    public Player createPlayer(@RequestBody Player player){
+    public Player createPlayer(@Valid @RequestBody Player player){
         return playerService.createPlayer(player);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable Long id, @RequestBody Player player){
+    public ResponseEntity<Player> updatePlayer(@PathVariable Long id, @Valid @RequestBody Player player){
         if(playerService.getPlayerById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }
