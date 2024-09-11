@@ -18,19 +18,23 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Match date cannot be empty")
+    @NotNull(message = "Match date cannot be empty")
     private LocalDate date;
 
     @NotBlank(message = "Match score cannot be empty")
     private String score;
 
     @ManyToOne
+    @JoinColumn(name = "a_team_id")
+    @NotNull
     private Team aTeam;
 
     @ManyToOne
+    @JoinColumn(name = "b_team_id")
+    @NotNull
     private Team bTeam;
 
-    @OneToMany(mappedBy = "match")
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MatchRecord> matchRecords;
 
     public Match(LocalDate date, String score, Team aTeam, Team bTeam, Set<MatchRecord> matchRecords) {
