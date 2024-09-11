@@ -2,12 +2,14 @@ package com.sirma.footballapi.Data;
 
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.service.TeamService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class TeamDataLoader {
 
     @Autowired
@@ -15,6 +17,9 @@ public class TeamDataLoader {
 
     public void loadTeams(String filePath){
         List<String[]> csvData = CsvReader.readCSV(filePath);
+
+        log.info(STR."Starting to load teams from file: \{filePath}");
+        int loadedTeamsCount = 0;
 
         for (String[] row : csvData){
             if(row.length != 4) {
@@ -30,13 +35,15 @@ public class TeamDataLoader {
                 Team existingTeam = teamService.getTeamById(id).orElse(null);
 
                 if(existingTeam == null){
-
                     Team team = new Team(id, name, managerFullName, group, null);
                     teamService.createTeam(team);
+                    loadedTeamsCount++;
                 }
             } catch (NumberFormatException e){
                 System.out.println(STR."Error loading the teams.csv \{e.getMessage()}");
             }
         }
+        log.info(STR."Finished loading teams. Teams loaded: \{loadedTeamsCount}");
     }
+
 }

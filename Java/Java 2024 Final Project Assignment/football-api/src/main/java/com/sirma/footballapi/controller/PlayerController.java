@@ -3,6 +3,7 @@ package com.sirma.footballapi.controller;
 import com.sirma.footballapi.models.Player;
 import com.sirma.footballapi.service.PlayerService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/players")
 @Validated
+@Slf4j
 public class PlayerController {
 
     @Autowired
@@ -28,10 +30,9 @@ public class PlayerController {
     public ResponseEntity<Player> getPlayerById(@PathVariable Long id){
         Optional<Player> player = playerService.getPlayerById(id);
         return player.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Player createPlayer(@Valid @RequestBody Player player){
         return playerService.createPlayer(player);
     }
@@ -42,9 +43,10 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
         if (!id.equals(player.getId())){
-            System.out.println(STR."The URL ID: \{id} doesn't match the request body ID: \{player.getId()}");
+           log.warn(STR."The URL ID: \{id} doesn't match the request body ID: \{player.getId()}");
             return ResponseEntity.badRequest().body(null);
         }
+
         player.setId(id);
         return ResponseEntity.ok(playerService.updatePlayer(id, player));
     }
@@ -52,6 +54,7 @@ public class PlayerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlayer(@PathVariable Long id){
         if(playerService.getPlayerById(id).isEmpty()){
+            log.warn(STR."Player with ID: \{id} doesn't exist");
             return ResponseEntity.notFound().build();
         }
 

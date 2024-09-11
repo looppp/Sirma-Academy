@@ -38,7 +38,7 @@ public class TeamController {
             return ResponseEntity.notFound().build();
         }
         if (!id.equals(team.getId())){
-            System.out.println(STR."The URL ID: \{id} doesn't match the request body ID: \{team.getId()}");
+           log.warn(STR."The URL ID: \{id} doesn't match the request body ID: \{team.getId()}");
             return ResponseEntity.badRequest().body(null);
         }
         team.setId(id);

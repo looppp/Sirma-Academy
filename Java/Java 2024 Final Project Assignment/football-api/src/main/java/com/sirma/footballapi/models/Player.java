@@ -29,5 +29,5 @@ public class Player {
 
     @ManyToOne
     private Team team;
-
 }
+

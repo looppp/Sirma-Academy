@@ -1,5 +1,7 @@
 package com.sirma.footballapi.Data;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Objects;
 
 import static java.lang.StringTemplate.STR;
 
+@Slf4j
 public class CsvReader {
 
     public static List<String[]> readCSV(String filePath){
@@ -23,7 +26,7 @@ public class CsvReader {
                 data.add(formatedLine.split(","));
             }
         } catch (IOException e) {
-            System.out.println(STR."An error has occurred while trying to read the file: \{e.getMessage()}");
+            log.warn(STR."An error has occurred while trying to read the file: \{e.getMessage()}");
         }
 
         return data;

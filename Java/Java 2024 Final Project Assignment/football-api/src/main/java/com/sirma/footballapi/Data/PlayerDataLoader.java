@@ -4,12 +4,14 @@ import com.sirma.footballapi.models.Player;
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.service.PlayerService;
 import com.sirma.footballapi.service.TeamService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class PlayerDataLoader {
 
     @Autowired
@@ -21,9 +23,12 @@ public class PlayerDataLoader {
     public void loadPlayers(String filePath){
         List<String[]> csvData = CsvReader.readCSV(filePath);
 
+        log.info(STR."Starting to load players from file: \{filePath}");
+        int loadedPlayersCount = 0;
+
         for (String[] row: csvData){
             if(row.length != 5) {
-                System.out.println(STR."Invalid data format:\{String.join(",", row)}");
+               log.warn(STR."Invalid data format:\{String.join(",", row)}");
                 continue;
             }
 
@@ -41,17 +46,19 @@ public class PlayerDataLoader {
                     Team team = teamService.getTeamById(teamId).orElse(null);
 
                     if(team == null){
-                        System.out.println(STR."Team not found for player with ID: \{teamId}");
+                       log.warn(STR."Team not found for player with ID: \{teamId}");
                         continue;
                     }
 
                     Player player = new Player(id, teamNumber, position, fullName, team);
                     playerService.createPlayer(player);
+                    loadedPlayersCount++;
+
                 }
             } catch (NumberFormatException e){
-                System.out.println(STR."Error loading the teams.csv \{e.getMessage()}");
+                log.warn(STR."Error loading the teams.csv \{e.getMessage()}");
             }
-
         }
+        log.info(STR."Finished loading players. Players loaded: \{loadedPlayersCount}");
     }
 }

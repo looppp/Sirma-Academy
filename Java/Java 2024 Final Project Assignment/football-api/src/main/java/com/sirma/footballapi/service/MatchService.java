@@ -1,10 +1,10 @@
 package com.sirma.footballapi.service;
 
+import com.sirma.footballapi.exception.MatchNotFoundException;
 import com.sirma.footballapi.models.Match;
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.repository.MatchRecordRepository;
 import com.sirma.footballapi.repository.MatchRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -29,32 +29,34 @@ public class MatchService {
     @Autowired
     private MatchRecordRepository matchRecordRepository;
 
+
     private boolean matchExists(LocalDate date, Team aTeam, Team bTeam) {
         return matchRepository.existsByDateAndATeamAndBTeam(date, aTeam, bTeam);
     }
 
     public List<Match> getAllMatches(){
-        log.info("Getting all matches");
         return matchRepository.findAll();
     }
 
     public Optional<Match> getMatchById(Long id){
-        Optional<Match> match = matchRepository.findById(id);
-        if(!match.isPresent()){
-            log.warn(STR."Match with ID: \{id} wasn't found");
+        if(matchRepository.findById(id).isEmpty()){
+            log.warn(STR."Match with ID: \{id} was not found");
+            throw new MatchNotFoundException(STR."Match with ID: \{id} was not found");
         }
-        return match;
+        return matchRepository.findById(id);
     }
 
     public Match createMatch(@Valid Match match){
         if(matchExists(match.getDate(), match.getATeam(), match.getBTeam())){
-            throw new IllegalArgumentException("Match with the same date, team A, and team B already exists.");
+            log.warn("Match with the same date, team A, and team B already exists.");
+            throw new MatchNotFoundException("Match with the same date, team A, and team B already exists.");
         }
         try{
             LocalDate currentMatchDate = parseDate(String.valueOf(match.getDate()));
             match.setDate(currentMatchDate);
         } catch (DateTimeException e){
-            throw new IllegalArgumentException(STR."Failed to parse the match date: \{match.getDate()}");
+            log.warn(STR."Failed to parse the match date: \{match.getDate()}");
+            throw new MatchNotFoundException(STR."Failed to parse the match date: \{match.getDate()}");
         }
 
         log.info(STR."Match is created");
@@ -63,13 +65,15 @@ public class MatchService {
 
     public Match updateMatch(Long id, @Valid Match match){
         if(!matchRepository.existsById(match.getId())){
-            throw new IllegalArgumentException(STR."Match with ID: \{match.getId()} doesn't exist");
+            log.warn(STR."Match with ID: \{match.getId()} doesn't exist");
+            throw new MatchNotFoundException(STR."Match with ID: \{match.getId()} doesn't exist");
         }
         try{
             LocalDate currentMatchDate = parseDate(String.valueOf(match.getDate()));
             match.setDate(currentMatchDate);
         } catch (DateTimeException e){
-            throw new IllegalArgumentException(STR."Failed to parse the match date: \{match.getDate()}");
+            log.warn(STR."Failed to parse the match date: \{match.getDate()}");
+            throw new MatchNotFoundException(STR."Failed to parse the match date: \{match.getDate()}");
         }
 
         log.info(STR."Match with ID: \{id} is updated");
@@ -80,14 +84,16 @@ public class MatchService {
     @Transactional
     public void deleteMatch(Long id){
         if(!matchRepository.existsById(id)){
-            throw new IllegalArgumentException(STR."Match with ID: \{id} doesn't exist");
+            log.warn(STR."Match with ID: \{id} doesn't exist");
+            throw new MatchNotFoundException(STR."Match with ID: \{id} doesn't exist");
         }
-        Match match = matchRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(STR."Match not found with id \{id}"));
+        Match match = matchRepository.findById(id).orElseThrow(() -> new MatchNotFoundException(STR."Match not found with id \{id}"));
 
         matchRecordRepository.deleteByMatch(match);
 
+        log.info(STR."Deleted match with ID: \{id}");
         matchRepository.deleteById(id);
 
-        log.info(STR."Deleted match with ID: \{id}");
+
     }
 }
