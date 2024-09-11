@@ -40,9 +40,7 @@ public class MatchService {
 
     public Optional<Match> getMatchById(Long id){
         Optional<Match> match = matchRepository.findById(id);
-        if(match.isPresent()){
-            log.info(STR."Match with ID: \{id} was found");
-        } else  {
+        if(!match.isPresent()){
             log.warn(STR."Match with ID: \{id} wasn't found");
         }
         return match;

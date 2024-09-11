@@ -2,7 +2,6 @@ package com.sirma.footballapi.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -23,7 +22,7 @@ public class Team {
     private String name;
 
     @NotBlank
-    @Size(min = 10, max = 50, message = "The manager's full name must be between 10 and 50 characters long.")
+    @Size(min = 4, max = 50, message = "The manager's full name must be between 10 and 50 characters long.")
     private String managerFullName;
 
     @NotBlank(message = "Team group cannot be empty")

@@ -29,13 +29,13 @@ public class MatchController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Match> getMatchById(@PathVariable Long id) {
+
         Optional<Match> match = matchService.getMatchById(id);
         return match.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")
-    public Match createMatch(@RequestBody Match match) {
-        System.out.println(match);
+    public Match createMatch(@Valid @RequestBody Match match) {
 
         return matchService.createMatch(match);
     }

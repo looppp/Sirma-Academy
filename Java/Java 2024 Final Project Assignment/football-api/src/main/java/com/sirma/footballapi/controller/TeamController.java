@@ -3,6 +3,7 @@ package com.sirma.footballapi.controller;
 import com.sirma.footballapi.models.Team;
 import com.sirma.footballapi.service.TeamService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/teams")
 @Validated
+@Slf4j
 public class TeamController {
 
     @Autowired
@@ -23,13 +25,15 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Team createTeam(@Valid @RequestBody Team team) {
+        log.info(STR."Created team: \{team.getName()}");
         return teamService.createTeam(team);
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @Valid @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
         if (teamService.getTeamById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
